@@ -65,10 +65,6 @@ def _apply_run_overrides(args):
     if args.experiment_id is not None:
         config.EXPERIMENT_ID = args.experiment_id
 
-    if args.quick:
-        config.EPOCHS = 3
-        config.RANDOM_SEEDS = [config.RANDOM_SEEDS[0]] if config.RANDOM_SEEDS else [42]
-
 
 def cmd_run(args):
     _apply_run_overrides(args)
@@ -103,7 +99,6 @@ def cmd_show_config(args):
 
 
 def _validate_minimal(payload: dict) -> list[str]:
-    """Резервная проверка без jsonschema."""
     errors = []
 
     required_evidence = [

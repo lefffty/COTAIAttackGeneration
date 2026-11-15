@@ -43,7 +43,8 @@
 2. Активируйте виртуальное окружение:
    - `source .venv/Scripts/activate` для Windows
    - `source .venv/bin/Activate` для Linux/macOS
-3. Установите зависимости из файла `requirements.txt`: `pip install -r requirements.txt`
+3. Обновить pip: `python.exe -m pip install --upgrade pip`
+4. Установите зависимости из файла `requirements.txt`: `pip install -r requirements.txt`
 
 Проверьте работу программы при помощи следующей команды: `python cli.py run --seeds 42 43 44 --eps 0.1`
 

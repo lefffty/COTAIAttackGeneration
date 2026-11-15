@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "COTAI attack-experiment evidence bundle",
+  "type": "object",
+  "required": ["experiment", "runs"],
+  "properties": {
+    "experiment": {
+      "type": "object",
+      "required": ["experiment_id", "dataset", "model", "attack", "environment"],
+      "properties": {
+        "experiment_id": { "type": "string", "minLength": 1 },
+        "description":   { "type": "string" },
+        "dataset": {
+          "type": "object",
+          "required": ["name", "version", "source"],
+          "properties": {
+            "name":     { "type": "string" },
+            "version":  { "type": "string" },
+            "source":   { "type": "string" },
+            "train_file": { "type": "string" },
+            "test_file":  { "type": "string" }
+          }
+        },
+        "model": {
+          "type": "object",
+          "required": ["name", "version", "source"],
+          "properties": {
+            "name":         { "type": "string" },
+            "version":      { "type": "string" },
+            "source":       { "type": "string" },
+            "framework":    { "type": "string" },
+            "architecture": { "type": "string" }
+          }
+        },
+        "attack": { "type": "object" },
+        "environment": {
+          "type": "object",
+          "required": ["application_environment_id", "life_cycle_stage_id", "object_domain_id"],
+          "properties": {
+            "application_environment_id": { "type": "string" },
+            "life_cycle_stage_id":        { "type": "string" },
+            "life_cycle_stage_description": { "type": "string" },
+            "object_domain_id":           { "type": "string" },
+            "python_version":             { "type": "string" },
+            "libraries":                  { "type": "object" }
+          }
+        },
+        "preprocessing": { "type": "object" },
+        "n_test_objects": { "type": "integer", "minimum": 0 },
+        "feature_columns": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["run_id", "status", "measurements"],
+        "properties": {
+          "run_id":      { "type": "string" },
+          "status":      { "enum": ["success", "error", "no_result"] },
+          "random_seed": { "type": "integer" },
+          "attack":      { "type": "object" },
+          "error":       { "type": "string" },
+          "measurements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "experiment_id", "run_id", "evidence_id",
+                "ai_system_id", "evaluation_method_id",
+                "application_environment_id", "life_cycle_stage_id",
+                "object_domain_id", "metric_id", "has_metric_value"
+              ],
+              "properties": {
+                "experiment_id":              { "type": "string" },
+                "run_id":                     { "type": "string" },
+                "evidence_id":                { "type": "string" },
+                "ai_system_id":               { "type": "string" },
+                "evaluation_method_id":       { "type": "string" },
+                "application_environment_id": { "type": "string" },
+                "life_cycle_stage_id":        { "type": "string" },
+                "object_domain_id":           { "type": "string" },
+                "metric_id":                  { "type": "string" },
+                "has_metric_value": {
+                  "oneOf": [ { "type": "number" }, { "type": "integer" } ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

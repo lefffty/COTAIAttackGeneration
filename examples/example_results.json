@@ -1,0 +1,165 @@
+{
+  "experiment": {
+    "experiment_id": "exp_nslkdd_mlp_fgsm_v1",
+    "description": "Атака FGSM (ART) на MLP-классификатор NSL-KDD.",
+    "dataset": {
+      "name": "NSL-KDD",
+      "version": "KDDTrain+ / KDDTest+ (original)",
+      "source": "https://www.unb.ca/cic/datasets/nsl.html",
+      "train_file": "KDDTrain+.txt",
+      "test_file":  "KDDTest+.txt"
+    },
+    "model": {
+      "name": "MLP binary classifier",
+      "version": "1.0",
+      "framework": "TensorFlow/Keras",
+      "source": "trained in this project",
+      "architecture": "Dense(64,relu) -> Dense(32,relu) -> Dense(2,softmax)"
+    },
+    "attack": {
+      "library": "adversarial-robustness-toolbox",
+      "method":  "FastGradientMethod",
+      "params":  { "eps": 0.1, "norm": "inf" }
+    },
+    "environment": {
+      "application_environment_id": "env_py310_tf213_art117",
+      "life_cycle_stage_id":        "testing",
+      "life_cycle_stage_description":
+        "Стадия testing: оценка устойчивости обученной модели к состязательным возмущениям.",
+      "object_domain_id":           "network_intrusion_detection",
+      "python_version":             "3.10.13",
+      "libraries": {
+        "numpy": "1.26.4",
+        "pandas": "2.1.4",
+        "sklearn": "1.3.2",
+        "tensorflow": "2.13.1",
+        "art": "1.17.0"
+      }
+    },
+    "preprocessing": {
+      "numeric":     "MinMaxScaler to [0,1] (fit on train)",
+      "categorical": "one-hot encoding (protocol_type, service, flag)"
+    },
+    "n_test_objects": 22544,
+    "feature_columns": ["duration", "src_bytes", "..."]
+  },
+  "runs": [
+    {
+      "run_id": "run_001",
+      "status": "success",
+      "random_seed": 42,
+      "attack": {
+        "evaluation_method_id": "art_fast_gradient_method",
+        "library": "adversarial-robustness-toolbox",
+        "method":  "FastGradientMethod",
+        "params":  { "eps": 0.1, "norm": "inf" }
+      },
+      "measurements": [
+        {
+          "experiment_id":              "exp_nslkdd_mlp_fgsm_v1",
+          "run_id":                     "run_001",
+          "evidence_id":                "ev_run_001_accuracy_before_attack",
+          "ai_system_id":               "model_nslkdd_mlp_v1",
+          "evaluation_method_id":       "art_fast_gradient_method",
+          "application_environment_id": "env_py310_tf213_art117",
+          "life_cycle_stage_id":        "testing",
+          "object_domain_id":           "network_intrusion_detection",
+          "metric_id":                  "accuracy_before_attack",
+          "has_metric_value":           0.8123
+        },
+        {
+          "experiment_id":              "exp_nslkdd_mlp_fgsm_v1",
+          "run_id":                     "run_001",
+          "evidence_id":                "ev_run_001_accuracy_after_attack",
+          "ai_system_id":               "model_nslkdd_mlp_v1",
+          "evaluation_method_id":       "art_fast_gradient_method",
+          "application_environment_id": "env_py310_tf213_art117",
+          "life_cycle_stage_id":        "testing",
+          "object_domain_id":           "network_intrusion_detection",
+          "metric_id":                  "accuracy_after_attack",
+          "has_metric_value":           0.7011
+        },
+        {
+          "experiment_id":              "exp_nslkdd_mlp_fgsm_v1",
+          "run_id":                     "run_001",
+          "evidence_id":                "ev_run_001_attack_success_rate",
+          "ai_system_id":               "model_nslkdd_mlp_v1",
+          "evaluation_method_id":       "art_fast_gradient_method",
+          "application_environment_id": "env_py310_tf213_art117",
+          "life_cycle_stage_id":        "testing",
+          "object_domain_id":           "network_intrusion_detection",
+          "metric_id":                  "attack_success_rate",
+          "has_metric_value":           0.1368
+        },
+        {
+          "experiment_id":              "exp_nslkdd_mlp_fgsm_v1",
+          "run_id":                     "run_001",
+          "evidence_id":                "ev_run_001_n_objects_total",
+          "ai_system_id":               "model_nslkdd_mlp_v1",
+          "evaluation_method_id":       "art_fast_gradient_method",
+          "application_environment_id": "env_py310_tf213_art117",
+          "life_cycle_stage_id":        "testing",
+          "object_domain_id":           "network_intrusion_detection",
+          "metric_id":                  "n_objects_total",
+          "has_metric_value":           22544
+        },
+        {
+          "experiment_id":              "exp_nslkdd_mlp_fgsm_v1",
+          "run_id":                     "run_001",
+          "evidence_id":                "ev_run_001_n_objects_modified",
+          "ai_system_id":               "model_nslkdd_mlp_v1",
+          "evaluation_method_id":       "art_fast_gradient_method",
+          "application_environment_id": "env_py310_tf213_art117",
+          "life_cycle_stage_id":        "testing",
+          "object_domain_id":           "network_intrusion_detection",
+          "metric_id":                  "n_objects_modified",
+          "has_metric_value":           22544
+        },
+        {
+          "experiment_id":              "exp_nslkdd_mlp_fgsm_v1",
+          "run_id":                     "run_001",
+          "evidence_id":                "ev_run_001_n_objects_valid_modified",
+          "ai_system_id":               "model_nslkdd_mlp_v1",
+          "evaluation_method_id":       "art_fast_gradient_method",
+          "application_environment_id": "env_py310_tf213_art117",
+          "life_cycle_stage_id":        "testing",
+          "object_domain_id":           "network_intrusion_detection",
+          "metric_id":                  "n_objects_valid_modified",
+          "has_metric_value":           10123
+        },
+        {
+          "experiment_id":              "exp_nslkdd_mlp_fgsm_v1",
+          "run_id":                     "run_001",
+          "evidence_id":                "ev_run_001_n_objects_successfully_attacked",
+          "ai_system_id":               "model_nslkdd_mlp_v1",
+          "evaluation_method_id":       "art_fast_gradient_method",
+          "application_environment_id": "env_py310_tf213_art117",
+          "life_cycle_stage_id":        "testing",
+          "object_domain_id":           "network_intrusion_detection",
+          "metric_id":                  "n_objects_successfully_attacked",
+          "has_metric_value":           2505
+        },
+        {
+          "experiment_id":              "exp_nslkdd_mlp_fgsm_v1",
+          "run_id":                     "run_001",
+          "evidence_id":                "ev_run_001_n_correctly_classified_before",
+          "ai_system_id":               "model_nslkdd_mlp_v1",
+          "evaluation_method_id":       "art_fast_gradient_method",
+          "application_environment_id": "env_py310_tf213_art117",
+          "life_cycle_stage_id":        "testing",
+          "object_domain_id":           "network_intrusion_detection",
+          "metric_id":                  "n_correctly_classified_before",
+          "has_metric_value":           18312
+        }
+      ]
+    },
+    {
+      "run_id": "run_002",
+      "status": "error",
+      "random_seed": 43,
+      "attack": {},
+      "error": "ValueError: example error description",
+      "measurements": []
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cotai-attack-experiments"
+version = "0.1.0"
+requires-python = ">=3.10,<3.12"
+
+dependencies = [
+    "tensorflow==2.13.0",
+    "tensorflow-io-gcs-filesystem==0.31.0",
+    "numpy==1.23.5",
+    "pandas==2.0.3",
+    "scipy==1.10.1",
+    "scikit-learn==1.1.3",
+    "adversarial-robustness-toolbox==1.17.0",
+    "setuptools<81",
+    "wheel",
+]
+
+[project.scripts]
+cotai = "cli:main"
+
+
+[tool.setuptools]
+py-modules = ["cli", "config", "run_experiments"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
